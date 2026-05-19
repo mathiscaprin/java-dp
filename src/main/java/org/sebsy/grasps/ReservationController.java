@@ -5,6 +5,7 @@ import org.sebsy.grasps.beans.Reservation;
 import org.sebsy.grasps.beans.TypeReservation;
 import org.sebsy.grasps.daos.ClientDao;
 import org.sebsy.grasps.daos.TypeReservationDao;
+import org.sebsy.strategy.ToDate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,11 +14,6 @@ import java.time.format.DateTimeFormatter;
  * Controlleur qui prend en charge la gestion des réservations client
  */
 public class ReservationController {
-
-    /**
-     * formatter
-     */
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     /**
      * DAO permettant d'accéder à la table des clients
@@ -43,8 +39,10 @@ public class ReservationController {
         String typeReservation = params.getTypeReservation();
         int nbPlaces = params.getNbPlaces();
 
+        ToDate toDate = new ToDate();
+
         // 2) Conversion de la date de réservation en LocalDateTime
-        LocalDateTime dateReservation = toDate(dateReservationStr);
+        LocalDateTime dateReservation = toDate.toDate(dateReservationStr);
 
         // 3) Extraction de la base de données des informations client
         Client client = clientDao.extraireClient(identifiantClient);
@@ -52,34 +50,12 @@ public class ReservationController {
         // 4) Extraction de la base de données des infos concernant le type de la réservation
         TypeReservation type = typeReservationDao.extraireTypeReservation(typeReservation);
 
-        // 5) Création de la réservation
-        Reservation reservation = new Reservation(dateReservation);
-        reservation.setNbPlaces(nbPlaces);
-        reservation.setClient(client);
+        ReservationFactory reservationFactory = new ReservationFactory();
+        Reservation reservation = reservationFactory.getInstance(client, type, nbPlaces, dateReservation);
 
-        // 6) Ajout de la réservation au client
-        client.getReservations().add(reservation);
 
-        // 7) Calcul du montant total de la réservation qui dépend:
-        //    - du nombre de places
-        //    - de la réduction qui s'applique si le client est premium ou non
-        double total = type.getMontant() * nbPlaces;
-        if (client.isPremium()) {
-            reservation.setTotal(total * (1 - type.getReductionPourcent() / 100.0));
-        } else {
-            reservation.setTotal(total);
-        }
         return reservation;
     }
 
-    /**
-     * Transforme une date au format String en {@link LocalDateTime}
-     *
-     * @param dateStr date au format String
-     * @return LocalDateTime
-     */
-    private LocalDateTime toDate(String dateStr) {
 
-        return LocalDateTime.parse(dateStr, formatter);
-    }
 }

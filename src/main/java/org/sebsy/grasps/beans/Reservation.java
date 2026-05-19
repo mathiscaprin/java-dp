@@ -102,4 +102,8 @@ public class Reservation {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    public void create() {
+        // Code de création de la réservation
+    }
 }
