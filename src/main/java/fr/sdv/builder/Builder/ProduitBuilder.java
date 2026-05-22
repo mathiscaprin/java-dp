@@ -1,3 +1,13 @@
+package fr.sdv.builder.Builder;
+
+import fr.sdv.builder.beans.Additif;
+import fr.sdv.builder.beans.Allergene;
+import fr.sdv.builder.beans.Categorie;
+import fr.sdv.builder.beans.Ingredient;
+import fr.sdv.builder.beans.Marque;
+import fr.sdv.builder.beans.Produit;
+
+
 public class ProduitBuilder {
     
     private Produit produit;
@@ -44,7 +54,7 @@ public class ProduitBuilder {
         return this;
     }
 
-    public ProduitBuilder SetAllergene(String nomAllergene, double qteMilligramme) {
+    public ProduitBuilder setAllergene(String nomAllergene, double qteMilligramme) {
         Allergene allergene = new Allergene(nomAllergene, qteMilligramme);
         this.produit.setAllergene(allergene);
         return this;

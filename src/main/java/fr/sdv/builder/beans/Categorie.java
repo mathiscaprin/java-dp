@@ -1,3 +1,7 @@
+package fr.sdv.builder.beans;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Categorie {
@@ -23,16 +27,5 @@ public class Categorie {
     public void setNom(String nom) {
         this.Nom = nom;
     }
-
-    /* getter */
-    public List<Produit> getProduits() {
-        return produits;
-    }
-
-    /* setter */
-    public void setProduits(List<Produit> produits) {
-        this.produits = produits;
-    }
-
 
 }

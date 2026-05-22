@@ -1,3 +1,5 @@
+package fr.sdv.factory.bean;
+
 public class Additif extends Element {
     
     public Additif() {
@@ -5,7 +7,7 @@ public class Additif extends Element {
     }
     
     public Additif(String nomAdditif, double qteMilligramme) {
-        super(nomAdditif, qteMilligramme, Unite.MILLIGRAMME);
+        super(nomAdditif, qteMilligramme, Unite.MILLI_GRAMMES);
     }
 
 }

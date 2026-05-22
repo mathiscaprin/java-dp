@@ -1,6 +1,4 @@
-import fr.sdv.factory.bean.Unite;
-import fr.sdv.factory.bean.ELement;
-
+package fr.sdv.factory.bean;
 
 public class Ingredient extends Element {
     
@@ -11,5 +9,7 @@ public class Ingredient extends Element {
     public Ingredient(String nomIngredient, double qteMilligramme, Unite unite) {
         super(nomIngredient, qteMilligramme, unite);
     }
+
+    
     
 }

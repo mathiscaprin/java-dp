@@ -1,3 +1,5 @@
+package fr.sdv.factory.bean;
+
 public class Allergene extends Element {
 
     public Allergene() {
